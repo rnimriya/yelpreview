@@ -56,11 +56,22 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ backendUrl, onReviewSubm
         }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit review');
+        let errorMessage = 'Failed to submit review';
+        try {
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const errData = await response.json();
+            errorMessage = errData.error || errorMessage;
+          } else {
+            const text = await response.text();
+            errorMessage = text.substring(0, 100) || errorMessage;
+          }
+        } catch (_) {}
+        throw new Error(errorMessage);
       }
+
+      const data = await response.json();
 
       // Success
       triggerToast('Thank you! Your review has been submitted and is pending moderation.');

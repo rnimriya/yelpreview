@@ -57,11 +57,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ backendUrl, onSt
         body: JSON.stringify({ username, password }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || 'Invalid credentials');
+        let errorMessage = 'Invalid credentials';
+        try {
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const errData = await response.json();
+            errorMessage = errData.error || errorMessage;
+          } else {
+            const text = await response.text();
+            errorMessage = text.substring(0, 100) || errorMessage;
+          }
+        } catch (_) {}
+        throw new Error(errorMessage);
       }
+
+      const data = await response.json();
 
       localStorage.setItem('admin_token', data.token);
       setToken(data.token);
