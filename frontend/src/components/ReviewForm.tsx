@@ -71,7 +71,6 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ backendUrl, onReviewSubm
         throw new Error(errorMessage);
       }
 
-      const data = await response.json();
 
       // Success
       triggerToast('Thank you! Your review has been submitted and is pending moderation.');
