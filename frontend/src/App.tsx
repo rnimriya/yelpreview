@@ -8,8 +8,8 @@ function App() {
   const [activeTab, setActiveTab] = useState<'public' | 'admin'>('public');
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-  // Configuration - during local development backend runs on port 5000, in production it routes to /_/backend via Vercel's multi-service routing
-  const BACKEND_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000' : '/_/backend');
+  // Configuration - during local development backend runs on port 5001, in production it routes to /_/backend via Vercel's multi-service routing
+  const BACKEND_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5001' : '/_/backend');
 
   const handleRefresh = () => {
     setRefreshTrigger((prev) => prev + 1);

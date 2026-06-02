@@ -37,7 +37,7 @@ const WidgetContainer: React.FC<WidgetContainerProps> = ({ backendUrl }) => {
 const initWidget = () => {
   const container = document.getElementById('trustguard-widget');
   if (container) {
-    const backendUrl = container.getAttribute('data-backend-url') || 'http://localhost:5000';
+    const backendUrl = container.getAttribute('data-backend-url') || 'http://localhost:5001';
     const root = ReactDOM.createRoot(container);
     root.render(
       <React.StrictMode>
