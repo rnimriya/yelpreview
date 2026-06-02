@@ -1,0 +1,21 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Review {
+  id                 String   @id @default(uuid())
+  reviewerName       String
+  reviewerEmail      String
+  rating             Int
+  recommendationText String
+  status             String   @default("pending") // "pending" | "approved" | "rejected"
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([status])
+}
